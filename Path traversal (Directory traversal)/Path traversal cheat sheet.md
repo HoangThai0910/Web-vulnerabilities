@@ -23,3 +23,9 @@ UTF-8 Unicode encoding
 / = %c0%af, %e0%80%af, %c0%2f
 \ = %c0%5c, %c0%80%5c
 ```
+Double URL encoding
+```
+. = %252e
+/ = %252f
+\ = %255c
+```
