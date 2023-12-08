@@ -27,3 +27,12 @@ Kết quả trả về là thông tin của admin mà không cần mật khẩu 
 ![image](https://github.com/HoangThai0910/Web-vulnerabilities/assets/108949637/61731106-d833-4678-bb78-9552770e0807)
 
 Nguyên nhân là vì câu truy vấn đã trở thành `SELECT * FROM user WHERE userid=’admin’-- AND password=’abcd’`. Phần kiểm tra mật khẩu đã bị loại bỏ bởi ký tự "--" (phần lệnh sau ký hiệu -- được coi là comment và sẽ không được thực hiện)
+
+Đây chỉ là một trong những hình thức đơn giản của SQL injection. Ngoài ra kẻ tấn công có thể sử dụng các lệnh như INSERT, DROP, DELETE, UPDATE để chèn, sửa hoặc xóa dữ liệu
+
+Trong các trường hợp nghiêm trọng hơn, khi kết nối với máy chủ cơ sở dữ liệu được thực hiện thông qua tài khoản quản trị, kẻ tấn công có thể đi sâu vào hệ điều hành của máy chủ. Kẻ tấn công sử dụng lỗ hổng SQL injection để cùng lúc tạo tài khoản người dùng trên máy chủ bị xâm nhập, kích hoạt tính năng Remote Desktop, cài đặt thư mục chia sẻ SMB và tải phần mềm độc hại 
+## Một số cách phòng chống ##
+- Tham số hóa truy vấn: Ví dụ nếu người dùng nhập `12345’ or 1=1 --` vào trường user_name thì truy vấn tham số hóa sẽ tìm kiếm trong CSDL để khớp với toàn chuỗi `12345’ or 1=1 -- `. Điều đó sẽ ngăn ngừa cấu trúc câu truy vấn bị thay đổi bởi bất kỳ đầu vào nào
+- Sử dụng các thủ tục trong cơ sở dữ liệu (stored procedures): Các thủ tục được lưu trữ sẽ thêm một lớp bảo mật bổ sung vào CSDL bên cạnh sử dụng truy vấn tham số. Nó thực hiện giúp cho ứng dụng xử lý dữ liệu đầu vào dưới dạng thủ tục được xây dựng từ trước thay vì thực thi câu lệnh SQL trực tiếp
+- Xác thực chuỗi input: Xác nhận là quá trình đảm bảo dữ liệu người dùng nhập vào là hợp lệ và vô hiệu hóa bất kỳ lệnh độc hại tiềm ẩn nào có thể được nhúng trong chuỗi nhập. Ví dụ, trong PHP, bạn có thể sử dụng mysqli_real_escape_string() để thoát các ký tự có thể thay đổi bản chất của lệnh SQL
+- Phân định rõ ràng kiểu input: Với những kiểm soát đơn giản như kiểm soát về kiểu dữ liệu cũng có thể hạn chế đáng kể các cuộc tấn công. Ví dụ những trường dữ liệu kiểu số khi nhận đầu vào là các ký tự không phải số sẽ được loại bỏ
