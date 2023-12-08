@@ -11,4 +11,6 @@ Lỗ hổng File Path Traversal xuất hiện trong các chức năng liên quan
 Các chức năng Web dễ xuất hiện Path traversal: Load resources, Load page(?menu=home, ?page=home,...), Download file,...
 
 ## Một số cách phòng chống ##
-- 
+- Lọc input của người dùng (Một số cách filter vẫn có thể bị hacker bypass)
+- Sử dụng whitelist cho những giá trị được cho phép
+- Tên file chỉ nên chứa ký tự chữ hoặc số, không nên chứa các ký tự đặc biệt
